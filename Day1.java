@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
@@ -12,33 +12,31 @@ public class Day1 {
 
         int total = 0;
 
+        ArrayList<Integer> list1 = new ArrayList<Integer>();
+        ArrayList<Integer> list2 = new ArrayList<Integer>();
+
+
         for (String s : fileData){
             String[] splitSample = s.split("   ");
 
-            int[] listOneStr = strToArray(splitSample[0]);
-
-            int[] listTwoStr = strToArray(splitSample[1]);
-
-
-            for (int i = 0; i < 5; i++){
-                total += Math.abs(listOneStr[i] - listTwoStr[i]);
-            }
-
+            list1.add(Integer.parseInt(splitSample[0]));
+            list2.add(Integer.parseInt(splitSample[1]));
 
         }
 
+        Collections.sort(list1);
+        System.out.println(list1);
+        Collections.sort(list2);
+        System.out.println(list2);
 
+        for (int i = 0; i < list1.size(); i++){
+            total += Math.abs(list1.get(i) - list2.get(i));
 
-    }
-
-    public static int[] strToArray(String list){
-        int[] arr = new int[5];
-        for (int i = 0; i < 5; i++){
-            arr[i] = parseInt(list.substring(i, i+1));
         }
 
-        Arrays.sort(arr);
-        return arr;
+        System.out.println(total);
+
+
     }
 
 
