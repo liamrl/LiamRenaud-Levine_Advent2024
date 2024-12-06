@@ -11,11 +11,21 @@ public class Day3 {
 
         ArrayList<String> fileData = getFileData("src/Day3Input.txt");
 
-        Pattern pattern = Pattern.compile("")
+
+        Pattern pattern = Pattern.compile("mul\\([0-9]{1,3},[0-9]{1,3}\\)");
+
+        int count = 0;
+        for (int i = 0; i < fileData.size(); i++){
+            Matcher matcher = pattern.matcher(fileData.get(i));
+
+            while (matcher.find()){
+                count++;
+            }
+        }
+
+        System.out.println(count);
 
     }
-
-
 
 
     public static ArrayList<String> getFileData(String fileName) {
@@ -29,11 +39,8 @@ public class Day3 {
                     fileData.add(line);
             }
             return fileData;
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             return fileData;
         }
     }
-
-
 }
