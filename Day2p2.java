@@ -14,7 +14,12 @@ public class Day2p2 {
         for (String s : fileData){
             String[] spl = s.split(" ");
 
-            if ((isDecreasing(spl) || isIncreasing(spl)) && difference(spl)){
+            ArrayList<Integer> list = new ArrayList<>();
+            for (String st : spl){
+                list.add(Integer.parseInt(st));
+            }
+
+            if ((isDecreasing(list) || difference(list)) && difference(list)){
                 total++;
             }
 
@@ -23,26 +28,11 @@ public class Day2p2 {
 
     }
 
-    public static boolean isIncreasing(String[] list){
+    public static boolean isIncreasing(ArrayList<Integer> list){
         int count = 0;
-        for (int i = 1; i < list.length - 1; i++){
-            if (Integer.parseInt(list[i - 1]) >= Integer.parseInt(list[i])){
-                count++;
-                if (!(count < 2 && Integer.parseInt(list[i - 1]) >= Integer.parseInt(list[i + 1]))){
-                    return false;
-                }
-
-            }
-        }
-        return true;
-    }
-
-    public static boolean isDecreasing(String[] list){
-        int count = 0;
-        for (int i = 1; i < list.length - 1; i++){
-            if (Integer.parseInt(list[i]) >= Integer.parseInt(list[i - 1])){
-                count++;
-                if (!(count < 2 && Integer.parseInt(list[i - 1]) >= Integer.parseInt(list[i + 1]))){
+        for (int i = 1; i < list.size(); i++){
+            if (list.get(i - 1) >= list.get(i)){
+                if (!removeOne(list)){
                     return false;
                 }
             }
@@ -50,15 +40,41 @@ public class Day2p2 {
         return true;
     }
 
-    public static boolean difference(String[] list){
-        for (int i = 1; i < list.length; i++){
-            if (Math.abs(Integer.parseInt(list[i]) - Integer.parseInt(list[i - 1])) > 3 || Math.abs(Integer.parseInt(list[i]) - Integer.parseInt(list[i - 1])) < 1){
-
+    public static boolean isDecreasing(ArrayList<Integer> list){
+        int count = 0;
+        for (int i = 1; i < list.size(); i++){
+            if (list.get(i - 1) <= list.get(i)){
+                if (!removeOne(list)){
+                    return false;
+                }
             }
         }
         return true;
     }
 
+    public static boolean difference(ArrayList<Integer> list){
+        int count = 0;
+        for (int i = 1; i < list.size(); i++){
+            if (Math.abs(list.get(i - 1) - list.get(i)) > 3 || Math.abs(list.get(i) - list.get(i - 1)) < 1) {
+                if (!removeOne(list)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean removeOne(ArrayList<Integer> list){
+        ArrayList<Integer> list2 = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++){
+            for (int j = 0; j < list.size(); j++){
+                if (!(j == i)){
+                    list2.add(list.get(j));
+                }
+
+            }
+        }
+    }
 
 
 
