@@ -19,7 +19,10 @@ public class Day2p2 {
                 list.add(Integer.parseInt(st));
             }
 
-            if ((isDecreasing(list) || difference(list)) && difference(list)){
+            System.out.println(list);
+
+            if ((isDecreasing(list, true) || isIncreasing(list, true)) && difference(list, true)){
+                System.out.println(true);
                 total++;
             }
 
@@ -28,52 +31,72 @@ public class Day2p2 {
 
     }
 
-    public static boolean isIncreasing(ArrayList<Integer> list){
-        int count = 0;
+    public static boolean isIncreasing(ArrayList<Integer> list, boolean q){
         for (int i = 1; i < list.size(); i++){
-            if (list.get(i - 1) >= list.get(i)){
+            if (list.get(i - 1) >= list.get(i) && q){
+                q = false;
                 if (!removeOne(list)){
                     return false;
+                }  else if (removeOne(list)) {
+                    return true;
                 }
+
+            }
+            else if (list.get(i - 1) >= list.get(i) && !q){
+                return false;
             }
         }
         return true;
     }
 
-    public static boolean isDecreasing(ArrayList<Integer> list){
-        int count = 0;
+    public static boolean isDecreasing(ArrayList<Integer> list, boolean q){
         for (int i = 1; i < list.size(); i++){
-            if (list.get(i - 1) <= list.get(i)){
+            if (list.get(i - 1) <= list.get(i) && q){
+                q = false;
                 if (!removeOne(list)){
                     return false;
+                } else if (removeOne(list)){
+                    return true;
                 }
+            } else if (list.get(i - 1) <= list.get(i) && !q){
+                return false;
             }
         }
         return true;
     }
 
-    public static boolean difference(ArrayList<Integer> list){
-        int count = 0;
+    public static boolean difference(ArrayList<Integer> list, boolean q){
         for (int i = 1; i < list.size(); i++){
-            if (Math.abs(list.get(i - 1) - list.get(i)) > 3 || Math.abs(list.get(i) - list.get(i - 1)) < 1) {
+            if ((Math.abs(list.get(i - 1) - list.get(i)) > 3 || Math.abs(list.get(i) - list.get(i - 1)) < 1) && q) {
+                q = false;
                 if (!removeOne(list)){
                     return false;
+                } else if (removeOne(list)){
+                    return true;
                 }
+            } else if ((Math.abs(list.get(i - 1) - list.get(i)) > 3 || Math.abs(list.get(i) - list.get(i - 1)) < 1) && !q){
+                return false;
             }
         }
         return true;
     }
 
     public static boolean removeOne(ArrayList<Integer> list){
+        System.out.println(list);
         ArrayList<Integer> list2 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++){
-            for (int j = 0; j < list.size(); j++){
-                if (!(j == i)){
-                    list2.add(list.get(j));
-                }
-
+            for (int j : list){
+                    list2.add(j);
             }
+            list2.remove(i);
+            // System.out.println(list2);
+            if ((isIncreasing(list2, false) || isDecreasing(list2, false)) && difference(list2, false)){
+                System.out.println(list2);
+                return true;
+            }
+            list2.clear();
         }
+        return false;
     }
 
 
