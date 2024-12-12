@@ -29,18 +29,21 @@ public class Day3p2 {
                 total += (Integer.parseInt(split[0]) * Integer.parseInt(split[1]));
             }
         }
+        onlyDo(fileData);
 
         System.out.println(total);
 
     }
 
 
-    public static ArrayList<String> onlyWorks (ArrayList<String> list){
+    public static ArrayList<String> onlyDo (ArrayList<String> list){
 
-        Pattern p = Pattern.compile("don't|do");
+        ArrayList<String> onlyDo = new ArrayList<>();
+        Pattern p = Pattern.compile("don't\\(\\)|do\\(\\)");
         ArrayList<Integer> indexDo = new ArrayList<>();
         indexDo.add(0);
-        ArrayList<Integer> indexDont = new ArrayList<>();
+        boolean boo = true;
+        int count = 0;
 
         for (int i = 0; i < list.size(); i++){
             String longString = list.get(i);
@@ -48,12 +51,48 @@ public class Day3p2 {
             Matcher m = p.matcher(longString);
 
             while(m.find()){
-                if (m.end() - m.start() > 2){
-                    indexDont.add(m.end());
+                if ((m.end() - m.start() == 7) && boo){
+                    indexDo.add(m.start() + count);
+                    boo = false;
+                } else if ((m.end() - m.start() == 4) && !boo){
+                    indexDo.add(m.start() + count);
+                    boo = true;
                 }
             }
+            if (boo){
+                indexDo.add(count - 1);
+            }
+            count += longString.length();
+
+            System.out.println(longString.length());
+            System.out.println(count);
+
+            System.out.println(indexDo);
+
+            for (int j = count; j < list.size(); j++){
+
+            }
+
+            indexDo.clear();
+
+            if (boo){
+                indexDo.add(count);
+            }
+
+
+
+
+
+
+
+
+
+
 
         }
+
+
+        return list;
     }
 
 
