@@ -15,8 +15,9 @@ public class Day3p2 {
         Pattern pattern = Pattern.compile("mul\\([0-9]{1,3},[0-9]{1,3}\\)");
 
         int total = 0;
-        for (int i = 0; i < fileData.size(); i++){
-            String longString = fileData.get(i);
+        ArrayList<String> oD = onlyDo(fileData);
+        for (int i = 0; i < oD.size(); i++){
+            String longString = oD.get(i);
             Matcher matcher = pattern.matcher(longString);
 
 
@@ -29,7 +30,7 @@ public class Day3p2 {
                 total += (Integer.parseInt(split[0]) * Integer.parseInt(split[1]));
             }
         }
-        onlyDo(fileData);
+
 
         System.out.println(total);
 
@@ -43,7 +44,6 @@ public class Day3p2 {
         ArrayList<Integer> indexDo = new ArrayList<>();
         indexDo.add(0);
         boolean boo = true;
-        int count = 0;
 
         for (int i = 0; i < list.size(); i++){
             String longString = list.get(i);
@@ -52,47 +52,39 @@ public class Day3p2 {
 
             while(m.find()){
                 if ((m.end() - m.start() == 7) && boo){
-                    indexDo.add(m.start() + count);
+                    indexDo.add(m.start());
                     boo = false;
                 } else if ((m.end() - m.start() == 4) && !boo){
-                    indexDo.add(m.start() + count);
+                    indexDo.add(m.start());
                     boo = true;
                 }
             }
-            if (boo){
-                indexDo.add(count - 1);
-            }
-            count += longString.length();
 
-            System.out.println(longString.length());
-            System.out.println(count);
+            if (boo){
+                indexDo.add(longString.length() - 1);
+            }
 
             System.out.println(indexDo);
+            System.out.println(longString.length());
 
-            for (int j = count; j < list.size(); j++){
 
+            for (int j = 0; j < list.size(); j++){
+                for (int k = 0; k < indexDo.size() - 1; k+=2){
+                    onlyDo.add(longString.substring(indexDo.get(k), indexDo.get(k + 1)));
+                }
             }
+
 
             indexDo.clear();
 
             if (boo){
-                indexDo.add(count);
+                indexDo.add(0);
             }
 
-
-
-
-
-
-
-
-
-
-
         }
+        System.out.println(onlyDo);
 
-
-        return list;
+        return onlyDo;
     }
 
 
