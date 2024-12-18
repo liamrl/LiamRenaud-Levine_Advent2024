@@ -30,13 +30,12 @@ public class Day6 {
             }
         }
 
-
+        ArrayList<ArrayList<Integer>> positions = new ArrayList<>();
 
         boolean up = true;
         boolean right = false;
         boolean down = false;
         boolean left = false;
-
 
 
         while (true){
@@ -48,6 +47,12 @@ public class Day6 {
                     up = false;
                     right = true;
                 } else{
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(posY);
+                    temp.add(posX);
+                    temp.add(0);
+                    positions.add(temp);
+
                     map[posY][posX] = "X";
                     posY--;
                 }
@@ -62,6 +67,12 @@ public class Day6 {
                     right = false;
                     down = true;
                 } else{
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(posY);
+                    temp.add(posX);
+                    temp.add(1);
+                    positions.add(temp);
+
                     map[posY][posX] = "X";
                     posX++;
                 }
@@ -75,6 +86,12 @@ public class Day6 {
                     down = false;
                     left = true;
                 } else{
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(posY);
+                    temp.add(posX);
+                    temp.add(2);
+                    positions.add(temp);
+
                     map[posY][posX] = "X";
                     posY++;
                 }
@@ -89,6 +106,11 @@ public class Day6 {
                     left = false;
                     up = true;
                 } else{
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(posY);
+                    temp.add(posX);
+                    temp.add(3);
+                    positions.add(temp);
                     map[posY][posX] = "X";
                     posX--;
                 }
@@ -98,6 +120,8 @@ public class Day6 {
 
         int total = 0;
 
+
+
         for (String[] str : map){
             for (String s : str){
                 if (s.equals("X")){
@@ -106,14 +130,12 @@ public class Day6 {
             }
         }
 
-        for (String[] str : map){
-            for (String s : str){
-                System.out.print(s);
-            }
-            System.out.println();
-        }
-
         System.out.println(total);
+
+
+
+
+        System.out.println(positions.size());
 
 
 
