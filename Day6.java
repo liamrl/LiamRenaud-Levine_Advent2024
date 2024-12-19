@@ -9,6 +9,23 @@ public class Day6 {
 
         ArrayList<String> fileData = getFileData("src/Day6Input.txt");
 
+
+        int total = 0;
+
+        for (int i = 0; i < fileData.size(); i++) {
+            for (int j = 0; j < fileData.get(0).length(); j++) {
+                if (rep(fileData, j, i)){
+                    total++;
+                }
+            }
+        }
+
+        System.out.println(total);
+
+
+    }
+
+    public static boolean rep (ArrayList<String> fileData, int x, int y){
         int row = fileData.size();
         int column = fileData.get(0).length();
 
@@ -29,6 +46,8 @@ public class Day6 {
                 map[i][j] = fileData.get(i).substring(j, j + 1);
             }
         }
+
+        map[y][x] = "#";
 
         ArrayList<ArrayList<Integer>> positions = new ArrayList<>();
 
@@ -51,6 +70,10 @@ public class Day6 {
                     temp.add(posY);
                     temp.add(posX);
                     temp.add(0);
+                    if (repeat(positions, temp)){
+                        return true;
+                    }
+
                     positions.add(temp);
 
                     map[posY][posX] = "X";
@@ -71,6 +94,10 @@ public class Day6 {
                     temp.add(posY);
                     temp.add(posX);
                     temp.add(1);
+                    if (repeat(positions, temp)){
+                        return true;
+                    }
+
                     positions.add(temp);
 
                     map[posY][posX] = "X";
@@ -90,6 +117,10 @@ public class Day6 {
                     temp.add(posY);
                     temp.add(posX);
                     temp.add(2);
+                    if (repeat(positions, temp)){
+                        return true;
+                    }
+
                     positions.add(temp);
 
                     map[posY][posX] = "X";
@@ -110,7 +141,12 @@ public class Day6 {
                     temp.add(posY);
                     temp.add(posX);
                     temp.add(3);
+                    if (repeat(positions, temp)){
+                        return true;
+                    }
+
                     positions.add(temp);
+
                     map[posY][posX] = "X";
                     posX--;
                 }
@@ -118,28 +154,23 @@ public class Day6 {
 
         }
 
-        int total = 0;
+
+
+        return false;
 
 
 
-        for (String[] str : map){
-            for (String s : str){
-                if (s.equals("X")){
-                    total++;
+    }
+
+    public static boolean repeat (ArrayList<ArrayList<Integer>> positions, ArrayList<Integer> temp){
+        for (int i = 0; i < positions.size(); i++){
+            for (int j = 0; j < 3; j++){
+                if ((temp.get(1) == positions.get(i).get(1)) && (temp.get(2) == positions.get(i).get(2)) && (temp.get(0) == positions.get(i).get(0))){
+                    return true;
                 }
             }
         }
-
-        System.out.println(total);
-
-
-
-
-        System.out.println(positions.size());
-
-
-
-
+        return false;
     }
 
 
